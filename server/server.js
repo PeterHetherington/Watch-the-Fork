@@ -26,9 +26,9 @@ app.get('/games', async (req, res) => {
     res.json(result.rows)
 })
 
-// get game + ratings
+// get reviews & ratings from specified game
 app.get('/gameReviews', async (req, res) => {
-    const result = await db.query(`SELECT g.name, g.genre, g.description, g.maxplayers, ROUND(AVG(gr.rating), 1) AS avg_rating FROM games g JOIN gamereviews gr on g.id = gr.game_id GROUP BY g.name, g.genre, g.description, g.maxplayers ORDER BY g.name ASC`)
+    const result = await db.query(`SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`, [idFromClient])
     res.json(result.rows)
 }) 
 
