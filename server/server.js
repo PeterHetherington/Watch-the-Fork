@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
   res.json("on root route");
 });
 
+
 // get movie info
 app.get("/movies", async (req, res) => {
   const result = await db.query(`SELECT * FROM movies ORDER BY name ASC`);
@@ -42,6 +43,26 @@ app.get(`/randomMovie`, async (req, res) => {
   res.json((await result).rows);
 });
 
-app.listen(8080, () => {
-  console.log(`server running on port 8080`);
-});
+// get game info
+app.get('/games', async (req, res) => {
+    const result = await db.query(`SELECT * FROM games ORDER BY name ASC`)
+    res.json(result.rows)
+})
+
+// get reviews & ratings from specified game
+app.get('/gameReviews', async (req, res) => {
+    const result = await db.query(`SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`, [idFromClient])
+    res.json(result.rows)
+}) 
+
+// get random game
+app.get('/randGame', async (req, res) => {
+    const result = await db.query(`SELECT g.name, g.genre, g.description, g.maxplayers, ROUND(AVG(gr.rating), 1) AS avg_rating FROM games g JOIN gamereviews gr on g.id = gr.game_id GROUP BY g.name, g.genre, g.description, g.maxplayers ORDER BY RANDOM() LIMIT 1`)
+    res.json(result.rows)
+})
+
+
+app.listen(8080, ()  => {
+    console.log(`server running on port 8080`)
+})
+
