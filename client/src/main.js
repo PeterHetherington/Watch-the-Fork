@@ -35,6 +35,8 @@ async function displayOutputs() {
 
 	outputs.forEach((output) => {
 		const divCard = document.createElement('div');
+		divCard.setAttribute('class', 'outputCard');
+
 		const h2Title = document.createElement('h2');
 		const pSynopsis = document.createElement('p');
 
@@ -42,6 +44,7 @@ async function displayOutputs() {
 		// const imgBg = document.createElement('img')
 
 		const divDetails = document.createElement('div');
+		divDetails.setAttribute('class', 'contentDetails');
 
 		// check database and add more h3 if needed
 		const h3Details1 = document.createElement('h3');
