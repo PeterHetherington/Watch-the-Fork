@@ -51,8 +51,9 @@ app.get('/games', async (req, res) => {
 
 // get reviews & ratings from specified game
 app.get('/gameReviews', async (req, res) => {
-    const result = await db.query(`SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`, [idFromClient])
-    res.json(result.rows)
+  const id = req.query.id // get value from query string
+  const result = await db.query(`SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`, [id])
+  res.json(result.rows)
 }) 
 
 // get random game
@@ -61,6 +62,21 @@ app.get('/randGame', async (req, res) => {
     res.json(result.rows)
 })
 
+// POST
+// post form to games
+app.post('/gameReviews', async (req, res) => {
+  const body = req.body
+  // console.log(body)
+
+  const nameFromClient = req.body.name
+  const gameIdFromClient = req.body.game_id
+  const reviewFromClient = req.body.review
+  const ratingFromClient = req.body.rating
+
+  const data = await db.query(`INSERT INTO gameReviews (name, game_id, review, rating) VALUES ($1, $2, $3, $4)`, [nameFromClient, gameIdFromClient, reviewFromClient, ratingFromClient])
+
+  res.send('Done')
+})
 
 app.listen(8080, ()  => {
     console.log(`server running on port 8080`)
