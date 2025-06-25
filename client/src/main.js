@@ -9,7 +9,7 @@ const movieBtn = document.getElementById('id');
 const gameBtn = document.getElementById('id');
 
 // test environment
-const test = `http://localhost:8080/`
+const test = `http://localhost:8080`
 const live = `https://indecisive-app-server.onrender.com`
 const BASE_URL = live
 
