@@ -1,120 +1,136 @@
 // change the random button id to match html
-const random = document.getElementById('id');
+const random = document.getElementById("random");
 
 // change the card div id to match html
-const app = document.getElementById('app');
+const app = document.getElementById("app");
 
 // change the button ids to match html
-const movieBtn = document.getElementById('id');
-const gameBtn = document.getElementById('id');
+const movieBtn = document.getElementById("id");
+const gameBtn = document.getElementById("id");
 
 // test environment
-const test = `http://localhost:8080`
-const live = `https://indecisive-app-server.onrender.com`
-const BASE_URL = live
+const test = `http://localhost:8080`;
+const live = `https://indecisive-app-server.onrender.com`;
+const BASE_URL = live;
 
 // fetch random game data
 async function fetchGames() {
-	const res = await fetch(`${BASE_URL}/randGame`)
-	const games = await res.json()
-	return games
+  const res = await fetch(`${BASE_URL}/randGame`);
+  const games = await res.json();
+  return games;
 }
 
 // fetch random movie data
 async function fetchMovies() {
-	const res = await fetch(`${BASE_URL}/randomMovie`)
-	const movies = await res.json()
-	return movies
+  const res = await fetch(`${BASE_URL}/randomMovie`);
+  const movies = await res.json();
+  return movies;
 }
 
+// // display the outputs in the form of cards
+// async function displayOutputs() {
+// 	app.innerHTML = '';
 
+// 	// reset the user input rating system
+// 	// xyz.reset();
 
+// 	const outputs = await fetchData();
 
-// display the outputs in the form of cards
-async function displayOutputs() {
-	app.innerHTML = '';
+// 	outputs.forEach((output) => {
+// 		const divCard = document.createElement('div');
+// 		const h2Title = document.createElement('h2');
+// 		const pSynopsis = document.createElement('p');
 
-	// reset the user input rating system
-	// xyz.reset();
+// 		// images are under question
+// 		// const imgBg = document.createElement('img')
 
-	const outputs = await fetchData();
+// 		const divDetails = document.createElement('div');
 
-	outputs.forEach((output) => {
-		const divCard = document.createElement('div');
-		const h2Title = document.createElement('h2');
-		const pSynopsis = document.createElement('p');
+// 		// check database and add more h3 if needed
+// 		const h3Details1 = document.createElement('h3');
+// 		const h3Details2 = document.createElement('h3');
+// 		const h3Details3 = document.createElement('h3');
 
-		// images are under question
-		// const imgBg = document.createElement('img')
+// 		const divForm = document.createElement('div');
 
-		const divDetails = document.createElement('div');
+// 		// ! add a rating input in the form (need to do some reading)
+// 		const form = document.createElement('form');
+// 		const h4CTA = document.createElement('h4');
 
-		// check database and add more h3 if needed
-		const h3Details1 = document.createElement('h3');
-		const h3Details2 = document.createElement('h3');
-		const h3Details3 = document.createElement('h3');
+// 		// event listensers for movie and games buttons selection
+// 		// ! update to match database - movies
+// 		movieBtn.addEventListener('click', () => {
+// 			h2Title.innerText = 'movies.name';
 
-		const divForm = document.createElement('div');
+// 			h3Details2.innerText = 'movies.genre';
+// 			h3Details3.innerText = 'movies.rating';
 
-		// ! add a rating input in the form (need to do some reading)
-		const form = document.createElement('form');
-		const h4CTA = document.createElement('h4');
+// 			pSynopsis.innerText = 'movies.description';
 
-		// event listensers for movie and games buttons selection
-		// ! update to match database - movies
-		movieBtn.addEventListener('click', () => {
-			h2Title.innerText = 'movies.name';
+// 			h4CTA.innerText = 'How much did you enjoy this movie?';
+// 		});
 
-			h3Details2.innerText = 'movies.genre';
-			h3Details3.innerText = 'movies.rating';
+// 		// ! update to match database - games
+// 		gameBtn.addEventListener('click', () => {
+// 			h2Title.innerText = 'game.title';
 
-			pSynopsis.innerText = 'movies.description';
+// 			h3Details1.innerText = 'game.year';
+// 			h3Details2.innerText = 'game.genre';
+// 			h3Details3.innerText = 'game.rating';
 
-			
-			h4CTA.innerText = 'How much did you enjoy this movie?';
-		});
+// 			pSynopsis.innerText = 'game.synopsis';
 
-		// ! update to match database - games
-		gameBtn.addEventListener('click', () => {
-			h2Title.innerText = 'game.title';
+// 			h4CTA.innerText = 'How much did you enjoy this game?';
+// 		});
 
-			h3Details1.innerText = 'game.year';
-			h3Details2.innerText = 'game.genre';
-			h3Details3.innerText = 'game.rating';
+// 		// append all details
+// 		divDetails.append(h3Details1, h3Details2, h3Details3);
 
-			pSynopsis.innerText = 'game.synopsis';
+// 		// append form
+// 		divForm.append(h4CTA, form);
 
-			h4CTA.innerText = 'How much did you enjoy this game?';
-		});
+// 		divCard.append(h2Title, divDetails, pSynopsis, divForm);
 
-		// append all details
-		divDetails.append(h3Details1, h3Details2, h3Details3);
+// 		app.appendChild(divCard);
 
-		// append form
-		divForm.append(h4CTA, form);
+// 		//
 
-		divCard.append(h2Title, divDetails, pSynopsis, divForm);
+// 		form.addEventListener('submit', async (event) => {
+// 			event.preventDefault();
 
-		app.appendChild(divCard);
+// 			const formData = new FormData(form);
+// 			const userInput = Object.fromEntries(formData);
 
-		//
+// 			const res = await fetch('http://', {
+// 				method: 'POST',
+// 				headers: {
+// 					'Content-Type': 'application/json',
+// 				},
 
-		form.addEventListener('submit', async (event) => {
-			event.preventDefault();
+// 				body: JSON.stringify(userInput),
+// 			});
+// 		});
+// 	});
+// }
 
-			const formData = new FormData(form);
-			const userInput = Object.fromEntries(formData);
+// displayOutputs();
 
-			const res = await fetch('http://', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-
-				body: JSON.stringify(userInput),
-			});
-		});
-	});
+function renderMovieCard(movie) {
+  const divCard = document.createElement("div");
+  divCard.className = "card moviecard";
+  divCard.innerHTML = `<h2>${movie.name}
+	</h2>
+	<p>Genre: ${movie.genre}</p>
+	<p>Description: ${movie.description}</p>
+	<p>Rating ${movie.rating}</p>
+	<p>AverageUserRating: ${movie.avg_rating ?? "N/A"}</p>
+	<buttonclass="open-review-dialog">Leave a Review</button>
+`;
+  return divCard;
 }
 
-displayOutputs();
+random.addEventListener("click", async () => {
+  app.innerHTML = "";
+  const movie = movieArray[0];
+  app.appendChild(renderMovieCard(movie));
+});
