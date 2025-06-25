@@ -1,26 +1,57 @@
 * {
+  font-family: "helvetica", sans-serif;
   padding: 0px;
   margin: 0px;
   background-color: rgb(62, 51, 103);
 }
 
-.app {
-  height: 300px;
-  width: 800px;
+body {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  position: absolute;
+  top: 40vh;
+  gap: 2vh;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
 }
 
 .random {
-  align-self: center;
-  font-family: "helvetica", sans-serif;
-  font-size: 3vh;
-  height: 5vh;
-  width: 25vh;
   border-color: white;
   background-color: black;
-  color: rgb(193, 194, 217)
+  color: rgb(193, 194, 217);
+  font-size: 3vh;
+  height: 10vh;
+  width: 50vh;
+  color: rgb(193, 194, 217);
+}
+
+.movies {
+  height: 4vh;
+  width: 20vh;
+  border-color: white;
+  background-color: black;
+  color: rgb(193, 194, 217);
+}
+
+.games {
+  height: 4vh;
+  width: 20vh;
+  border-color: white;
+  background-color: black;
+  color: rgb(193, 194, 217);
 }
 
 button:hover {
