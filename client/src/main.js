@@ -112,3 +112,27 @@ async function displayOutputs() {
 }
 
 displayOutputs();
+
+// move if needed
+random.addEventListener(() => {
+	movieBtn.addEventListener(() => {
+		movieBtnClicked();
+	});
+	gameBtn.addEventListener(() => {
+		gameBtnClicked();
+	});
+
+	displayOutputs();
+});
+
+//
+// move below functions inside displayOutputs();
+function movieBtnClicked() {
+	// ! update to match database - movies
+	// from addEventListener to moviesBtn
+}
+
+function gameBtnClicked() {
+	// ! update to match database - games
+	// from addEventListener to gameBtn
+}
