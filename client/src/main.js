@@ -57,14 +57,14 @@ async function displayOutputs() {
 		// event listensers for movie and games buttons selection
 		// ! update to match database - movies
 		movieBtn.addEventListener('click', () => {
-			h2Title.innerText = 'movie.title';
+			h2Title.innerText = 'movies.name';
 
-			h3Details1.innerText = 'movie.year';
-			h3Details2.innerText = 'movie.genre';
-			h3Details3.innerText = 'movie.rating';
+			h3Details2.innerText = 'movies.genre';
+			h3Details3.innerText = 'movies.rating';
 
-			pSynopsis.innerText = 'movie.synopsis';
+			pSynopsis.innerText = 'movies.description';
 
+			
 			h4CTA.innerText = 'How much did you enjoy this movie?';
 		});
 
