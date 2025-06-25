@@ -8,13 +8,27 @@ const app = document.getElementById('app');
 const movieBtn = document.getElementById('id');
 const gameBtn = document.getElementById('id');
 
-// change api source
-async function fetchData() {
-	const data = await fetch('http://');
+// test environment
+const test = `http://localhost:8080/`
+const live = `https://indecisive-app-server.onrender.com`
+const BASE_URL = live
 
-	const options = await data.json();
-	return options;
+// fetch random game data
+async function fetchGames() {
+	const res = await fetch(`${BASE_URL}/randGame`)
+	const games = await res.json()
+	return games
 }
+
+// fetch random movie data
+async function fetchMovies() {
+	const res = await fetch(`${BASE_URL}/randomMovie`)
+	const movies = await res.json()
+	return movies
+}
+
+
+
 
 // display the outputs in the form of cards
 async function displayOutputs() {
