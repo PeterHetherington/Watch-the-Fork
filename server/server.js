@@ -82,6 +82,7 @@ app.get("/randGame", async (req, res) => {
   res.json(result.rows);
 });
 
+
 // POST
 // post form to games
 app.post("/gameReviews", async (req, res) => {

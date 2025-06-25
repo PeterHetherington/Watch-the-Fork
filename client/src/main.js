@@ -1,34 +1,28 @@
-// change the random button id to match html
-const random = document.getElementById('id');
+const random = document.getElementById('random');
 
-// change the card div id to match html
 const app = document.getElementById('app');
 
-// change the button ids to match html
-const movieBtn = document.getElementById('id');
-const gameBtn = document.getElementById('id');
+const movieBtn = document.getElementById('movies');
+const gameBtn = document.getElementById('games');
 
 // test environment
-const test = `http://localhost:8080`
-const live = `https://indecisive-app-server.onrender.com`
-const BASE_URL = live
+const test = `http://localhost:8080`;
+const live = `https://indecisive-app-server.onrender.com`;
+const BASE_URL = live;
 
 // fetch random game data
 async function fetchGames() {
-	const res = await fetch(`${BASE_URL}/randGame`)
-	const games = await res.json()
-	return games
+	const res = await fetch(`${BASE_URL}/randGame`);
+	const games = await res.json();
+	return games;
 }
 
 // fetch random movie data
 async function fetchMovies() {
-	const res = await fetch(`${BASE_URL}/randomMovie`)
-	const movies = await res.json()
-	return movies
+	const res = await fetch(`${BASE_URL}/randomMovie`);
+	const movies = await res.json();
+	return movies;
 }
-
-
-
 
 // display the outputs in the form of cards
 async function displayOutputs() {
@@ -118,3 +112,27 @@ async function displayOutputs() {
 }
 
 displayOutputs();
+
+// move if needed
+random.addEventListener(() => {
+	movieBtn.addEventListener(() => {
+		movieBtnClicked();
+	});
+	gameBtn.addEventListener(() => {
+		gameBtnClicked();
+	});
+
+	displayOutputs();
+});
+
+//
+// move below functions inside displayOutputs();
+function movieBtnClicked() {
+	// ! update to match database - movies
+	// from addEventListener to moviesBtn
+}
+
+function gameBtnClicked() {
+	// ! update to match database - games
+	// from addEventListener to gameBtn
+}
