@@ -73,7 +73,7 @@ app.get('/gameReviews', async (req, res) => {
 
 // get random game
 app.get('/randGame', async (req, res) => {
-    const result = await db.query(`SELECT g.name, g.genre, g.description, g.maxplayers, ROUND(AVG(gr.rating), 1) AS avg_rating FROM games g JOIN gamereviews gr on g.id = gr.game_id GROUP BY g.name, g.genre, g.description, g.maxplayers ORDER BY RANDOM() LIMIT 1`)
+    const result = await db.query(`SELECT g.id, g.name, g.genre, g.description, g.maxplayers, ROUND(AVG(gr.rating), 1) AS avg_rating FROM games g JOIN gamereviews gr on g.id = gr.game_id GROUP BY g.id, g.name, g.genre, g.description, g.maxplayers ORDER BY RANDOM() LIMIT 1`)
     res.json(result.rows)
 })
 
