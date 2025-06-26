@@ -145,7 +145,7 @@ slider.addEventListener("input", function(event){
   value.innerText= event.target.value;
 })
 
-}
+
 
 movieBtn.addEventListener("click", (event) => {
   gameContainer.innerHTML = "";
@@ -159,3 +159,69 @@ gameBtn.addEventListener("click", (event) => {
   movieContainer.innerHTML = "";
   createGameCard();
 });
+
+
+// get form data
+const form = document.getElementById('form')
+// add event listener to form
+form.addEventListener('submit', async (event) =>{
+  event.preventDefault()
+
+  const formData = new FormData(form)
+
+  const data = Object.fromEntries(formData)
+
+  // form validation
+  if(!data.name || data.rating > 10 || data.rating < 0){
+    alert("Unable to post review, Username & rating required")
+    return;
+  }
+  // check of game or movie
+  if (data.category == 'game'){
+    console.log('try to submit game')
+    console.log(data)
+    try{
+      const res = await fetch(`${BASE_URL}/gameReviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      if(!res.ok){
+        throw new error("HTTP error");
+      }
+      form.reset();
+      modal.close();
+      alert("Review posted, Thank you!")
+    }catch(error){
+      console.log(error);
+      alert("Unable to submit review")
+    }
+  } else if (data.category == 'movie'){
+    console.log('try to submit movie')
+    console.log(data)
+    try{
+      const res = await fetch(`${BASE_URL}/moviesreviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      if(!res.ok){
+        throw new error("HTTP error");
+      }
+      form.reset();
+      modal.close();
+      alert("Review posted, Thank you!")
+    }catch(error){
+      console.log(error);
+      alert("Unable to submit review")
+    }
+  } else {
+    alert('Error: could not process review submission')
+    return;
+  }
+
+})
