@@ -26,8 +26,10 @@ async function fetchMovies() {
 
 // TODO
 // get card display
-const gameContainer = document.getElementById("gameContainer");
-const movieContainer = document.getElementById("movieContainer");
+const gameContainer = document.createElement('div');
+gameContainer.className = 'gameContainer'
+const movieContainer = document.createElement('div');
+movieContainer.className = 'movieContainer'
 
 // get modal
 // const modal = document.getElementById('modal');
@@ -41,14 +43,12 @@ async function createGameCard() {
   const game = data[0];
   gameContainer.innerHTML = "";
 
-  const div = document.createElement("div");
-  div.className = "card";
   const h2 = document.createElement("h2");
   h2.className = "title";
   h2.innerText = `${game.name}`;
   const p1 = document.createElement("p");
   p1.className = "rating";
-  p1.innerText = `${game.avg_rating}`;
+  p1.innerText = `${game.avg_rating}` + ` ★`;
   const p2 = document.createElement("p");
   p2.className = "genre";
   p2.innerText = `${game.genre}`;
@@ -58,6 +58,10 @@ async function createGameCard() {
   const p4 = document.createElement("p");
   p4.className = "detail";
   p4.innerText = `${game.maxplayers}`;
+
+  const details = document.createElement('div')
+  details.append(p2, p4, p1)
+  details.className = 'details'
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Review";
@@ -86,8 +90,10 @@ async function createGameCard() {
     showGameReviewsModal(showRevBtn.value);
   });
 
+
   div.append(h2, p1, p2, p3, p4, revBtn, showRevBtn);
   gameContainer.appendChild(div);
+
 }
 async function fetchGameReviewsById(gameId) {
   const res = await fetch(`${BASE_URL}/gameReviews?id=${gameId}`); //query string to pull from the reviews table specifically the movie ID
@@ -158,14 +164,12 @@ async function createMovieCard() {
   const movie = data[0];
   movieContainer.innerHTML = "";
 
-  const div = document.createElement("div");
-  div.className = "card";
   const h2 = document.createElement("h2");
   h2.className = "title";
   h2.innerText = `${movie.name}`;
   const p1 = document.createElement("p");
   p1.className = "rating";
-  p1.innerText = `${movie.avg_rating}`;
+  p1.innerText = `${movie.avg_rating}` + ` ★`;
   const p2 = document.createElement("p");
   p2.className = "genre";
   p2.innerText = `${movie.genre}`;
@@ -176,9 +180,14 @@ async function createMovieCard() {
   p4.className = "detail";
   p4.innerText = `${movie.rating}`;
 
+  const details = document.createElement('div')
+  details.append(p2, p4, p1)
+  details.className = 'details'
+
   const revBtn = document.createElement("button");
   revBtn.innerText = "Leave a Review";
   revBtn.value = `${movie.id}`;
+  revBtn.className = "reviewBtn";
 
   revBtn.addEventListener("click", async (event) => {
     // call create form function // possibly modal
@@ -201,8 +210,10 @@ async function createMovieCard() {
     showMovieReviewsModal(showRevBtn.value);
   });
 
+
   div.append(h2, p1, p2, p3, p4, revBtn, showRevBtn);
   movieContainer.appendChild(div);
+
 }
 
 // add event listener to random button
@@ -221,18 +232,83 @@ close.addEventListener("click", () => {
 const slider = document.getElementById("slider");
 let value = document.getElementById("ratingValue");
 
+
 slider.addEventListener("input", function (event) {
   value.innerText = event.target.value;
 });
 
 movieBtn.addEventListener("click", (event) => {
-  gameContainer.innerHTML = "";
-  movieContainer.innerHTML = "";
+  app.innerHTML = "";
   createMovieCard();
 });
 
 gameBtn.addEventListener("click", (event) => {
-  gameContainer.innerHTML = "";
-  movieContainer.innerHTML = "";
+  app.innerHTML = "";
   createGameCard();
 });
+
+
+// get form data
+const form = document.getElementById('form')
+// add event listener to form
+form.addEventListener('submit', async (event) =>{
+  event.preventDefault()
+
+  const formData = new FormData(form)
+
+  const data = Object.fromEntries(formData)
+
+  // form validation
+  if(!data.name || data.rating > 10 || data.rating < 0){
+    alert("Unable to post review, Username & rating required")
+    return;
+  }
+  // check of game or movie
+  if (data.category == 'game'){
+    console.log('try to submit game')
+    console.log(data)
+    try{
+      const res = await fetch(`${BASE_URL}/gameReviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      if(!res.ok){
+        throw new error("HTTP error");
+      }
+      form.reset();
+      modal.close();
+      alert("Review posted, Thank you!")
+    }catch(error){
+      console.log(error);
+      alert("Unable to submit review")
+    }
+  } else if (data.category == 'movie'){
+    console.log('try to submit movie')
+    console.log(data)
+    try{
+      const res = await fetch(`${BASE_URL}/moviesreviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      if(!res.ok){
+        throw new error("HTTP error");
+      }
+      form.reset();
+      modal.close();
+      alert("Review posted, Thank you!")
+    }catch(error){
+      console.log(error);
+      alert("Unable to submit review")
+    }
+  } else {
+    alert('Error: could not process review submission')
+    return;
+  }
+
+})

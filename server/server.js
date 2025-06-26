@@ -57,9 +57,9 @@ app.get(`/randomMovie`, async (req, res) => {
 app.post("/moviesreviews", async (req, res) => {
   const body = req.body;
   const name = body.name;
-  const moviesID = body.movies_id;
-  const reviews = body.reviews;
-  const userRatings = body.user_ratings;
+  const moviesID = body.id;
+  const reviews = body.review;
+  const userRatings = body.rating;
 
   const data = await db.query(
     `INSERT INTO movie_reviews (name, movies_id, reviews, user_ratings) VALUES ($1, $2, $3, $4)`,
@@ -98,10 +98,10 @@ app.get("/randGame", async (req, res) => {
 // post form to games
 app.post("/gameReviews", async (req, res) => {
   const body = req.body;
-  // console.log(body)
+  console.log(body)
 
   const nameFromClient = req.body.name;
-  const gameIdFromClient = req.body.game_id;
+  const gameIdFromClient = req.body.id;
   const reviewFromClient = req.body.review;
   const ratingFromClient = req.body.rating;
 

@@ -2,10 +2,10 @@
   font-family: "helvetica", sans-serif;
   padding: 0px;
   margin: 0px;
-  background-color: rgb(62, 51, 103);
 }
 
 body {
+  background-color: rgb(62, 51, 103);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,29 +29,76 @@ body {
 }
 
 .random {
-  border-color: white;
-  background-color: black;
-  color: rgb(193, 194, 217);
-  font-size: 3vh;
-  height: 10vh;
-  width: 50vh;
-  color: rgb(193, 194, 217);
+	border-color: white;
+	background-color: black;
+	color: rgb(193, 194, 217);
+	font-size: 3vh;
+	height: 10vh;
+	width: 50vh;
+	color: rgb(193, 194, 217);
+	font-weight: normal;
+	font-size: 2.5rem;
 }
 
 .movies {
-  height: 4vh;
-  width: 20vh;
-  border-color: white;
-  background-color: black;
-  color: rgb(193, 194, 217);
+	height: 4vh;
+	width: fit-content;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	border-color: white;
+	background-color: black;
+	color: rgb(193, 194, 217);
+	font-size: 1rem;
 }
 
 .games {
-  height: 4vh;
-  width: 20vh;
-  border-color: white;
-  background-color: black;
-  color: rgb(193, 194, 217);
+	height: 4vh;
+	width: fit-content;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	border-color: white;
+	background-color: black;
+	color: rgb(193, 194, 217);
+	font-size: 1rem;
+}
+
+/*background colour not appling -- overlapping with the div card need to change main*/
+.gameContainer, .movieContainer {
+	display: flex;
+	flex-direction: column;
+	border: solid;
+	border-color: white;
+	background-color: black;
+	color: rgb(193, 194, 217);
+	padding: 2rem;
+	gap: 1rem;
+	width: 30vw;
+}
+
+.app {
+	display: flex;
+	gap: 4vw;
+}
+
+.reviewBtn {
+	color: black;
+	background-color: white;
+	padding: 0.3rem;
+	border-style: solid;
+	font-size: 1rem;
+	width: fit-content;
+}
+
+.title {
+	font-weight: normal;
+	font-size: 2em;
+}
+
+/*add a details div to main and put rating genre and details in it*/
+.details {
+	display: flex;
+	align-items: flex-end;
+	gap: 2rem;
 }
 
 /* designed on iphone 12 pro */
