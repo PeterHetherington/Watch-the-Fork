@@ -26,10 +26,10 @@ async function fetchMovies() {
 
 // TODO
 // get card display
-const gameContainer = document.createElement('div');
-gameContainer.className = 'gameContainer'
-const movieContainer = document.createElement('div');
-movieContainer.className = 'movieContainer'
+const gameContainer = document.createElement("div");
+gameContainer.className = "gameContainer";
+const movieContainer = document.createElement("div");
+movieContainer.className = "movieContainer";
 
 // get modal
 // const modal = document.getElementById('modal');
@@ -59,9 +59,9 @@ async function createGameCard() {
   p4.className = "detail";
   p4.innerText = `${game.maxplayers}`;
 
-  const details = document.createElement('div')
-  details.append(p2, p4, p1)
-  details.className = 'details'
+  const details = document.createElement("div");
+  details.append(p2, p4, p1);
+  details.className = "details";
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Leave a review";
@@ -80,16 +80,6 @@ async function createGameCard() {
 
     modal.showModal();
   });
-  // show reviews listed
-  const showRevBtn = document.createElement("button");
-  showRevBtn.innerText = "Leave a Review";
-  showRevBtn.value = `${game.id}`;
-
-  showRevBtn.addEventListener("click", async (event) => {
-    console.log(showRevBtn);
-    showGameReviewsModal(showRevBtn.value);
-  });
-
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
@@ -102,8 +92,7 @@ async function createGameCard() {
   });
 
   gameContainer.append(h2, details, p3, revBtn, showRevBtn);
-  app.append( gameContainer);
-
+  app.append(gameContainer);
 }
 
 // create movie card
@@ -128,9 +117,9 @@ async function createMovieCard() {
   p4.className = "detail";
   p4.innerText = `${movie.rating}`;
 
-  const details = document.createElement('div')
-  details.append(p2, p4, p1)
-  details.className = 'details'
+  const details = document.createElement("div");
+  details.append(p2, p4, p1);
+  details.className = "details";
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Leave a review";
@@ -149,7 +138,6 @@ async function createMovieCard() {
 
     modal.showModal();
   });
-
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
@@ -228,10 +216,6 @@ async function showMovieReviewsModal(movie) {
   modal.showModal();
 }
 
-
-
-
-
 // add event listener to random button
 random.addEventListener("click", (event) => {
   createGameCard();
@@ -248,7 +232,6 @@ close.addEventListener("click", () => {
 const slider = document.getElementById("slider");
 let value = document.getElementById("ratingValue");
 
-
 slider.addEventListener("input", function (event) {
   value.innerText = event.target.value;
 });
@@ -263,68 +246,66 @@ gameBtn.addEventListener("click", (event) => {
   createGameCard();
 });
 
-
 // get form data
-const form = document.getElementById('form')
+const form = document.getElementById("form");
 // add event listener to form
-form.addEventListener('submit', async (event) =>{
-  event.preventDefault()
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-  const formData = new FormData(form)
+  const formData = new FormData(form);
 
-  const data = Object.fromEntries(formData)
+  const data = Object.fromEntries(formData);
 
   // form validation
-  if(!data.name || data.rating > 10 || data.rating < 0){
-    alert("Unable to post review, Username & rating required")
+  if (!data.name || data.rating > 10 || data.rating < 0) {
+    alert("Unable to post review, Username & rating required");
     return;
   }
   // check of game or movie
-  if (data.category == 'game'){
-    console.log('try to submit game')
-    console.log(data)
-    try{
+  if (data.category == "game") {
+    console.log("try to submit game");
+    console.log(data);
+    try {
       const res = await fetch(`${BASE_URL}/gameReviews`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-      })
-      if(!res.ok){
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
         throw new error("HTTP error");
       }
       form.reset();
       modal.close();
-      alert("Review posted, Thank you!")
-    }catch(error){
+      alert("Review posted, Thank you!");
+    } catch (error) {
       console.log(error);
-      alert("Unable to submit review")
+      alert("Unable to submit review");
     }
-  } else if (data.category == 'movie'){
-    console.log('try to submit movie')
-    console.log(data)
-    try{
+  } else if (data.category == "movie") {
+    console.log("try to submit movie");
+    console.log(data);
+    try {
       const res = await fetch(`${BASE_URL}/moviesreviews`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-      })
-      if(!res.ok){
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
         throw new error("HTTP error");
       }
       form.reset();
       modal.close();
-      alert("Review posted, Thank you!")
-    }catch(error){
+      alert("Review posted, Thank you!");
+    } catch (error) {
       console.log(error);
-      alert("Unable to submit review")
+      alert("Unable to submit review");
     }
   } else {
-    alert('Error: could not process review submission')
+    alert("Error: could not process review submission");
     return;
   }
-
-})
+});
