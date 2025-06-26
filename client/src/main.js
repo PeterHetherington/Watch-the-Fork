@@ -111,12 +111,14 @@ random.addEventListener("click", (event) => {
   createMovieCard();
 });
 
-function movieBtnClicked() {
-  // ! update to match database - movies
-  // from addEventListener to moviesBtn
-}
+movieBtn.addEventListener("click", (event) => {
+  gameContainer.innerHTML = "";
+  movieContainer.innerHTML = "";
+  createMovieCard();
+});
 
-function gameBtnClicked() {
-  // ! update to match database - games
-  // from addEventListener to gameBtn
-}
+gameBtn.addEventListener("click", (event) => {
+  gameContainer.innerHTML = "";
+  movieContainer.innerHTML = "";
+  createGameCard();
+});
