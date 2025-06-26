@@ -145,13 +145,17 @@ slider.addEventListener("input", function(event){
   value.innerText= event.target.value;
 })
 
-
-function movieBtnClicked() {
-  // ! update to match database - movies
-  // from addEventListener to moviesBtn
 }
 
-function gameBtnClicked() {
-  // ! update to match database - games
-  // from addEventListener to gameBtn
-}
+movieBtn.addEventListener("click", (event) => {
+  gameContainer.innerHTML = "";
+  movieContainer.innerHTML = "";
+  createMovieCard();
+});
+
+
+gameBtn.addEventListener("click", (event) => {
+  gameContainer.innerHTML = "";
+  movieContainer.innerHTML = "";
+  createGameCard();
+});
