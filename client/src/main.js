@@ -29,6 +29,12 @@ async function fetchMovies() {
 const gameContainer = document.getElementById("gameContainer");
 const movieContainer = document.getElementById("movieContainer");
 
+// get modal
+// const modal = document.getElementById('modal');
+// modal.showModal()
+
+const modCon = document.getElementById('modalContainer');
+
 // create game card
 async function createGameCard() {
   const data = await fetchGames();
@@ -57,10 +63,18 @@ async function createGameCard() {
   revBtn.innerText = "Review";
   revBtn.value = `${game.id}`;
   revBtn.className = "reviewBtn";
+  revBtn.id = "gameReviewBtn"
 
   revBtn.addEventListener("click", async (event) => {
-    const id = revBtn.value;
     // call create form function // possibly modal
+    const modal = document.getElementById('modal');
+    // assign category to form
+    const con = document.getElementById('hiddenContainer');
+    console.log(con)
+    con.innerHTML = `<input id="category" hidden name="category" value="game">
+      <input id="id" hidden name="id" value="${revBtn.value}">`
+    
+    modal.showModal()
   });
 
   div.append(h2, p1, p2, p3, p4, revBtn);
@@ -71,7 +85,6 @@ async function createGameCard() {
 async function createMovieCard() {
   const data = await fetchMovies();
   const movie = data[0];
-  console.log(movie);
   movieContainer.innerHTML = "";
 
   const div = document.createElement("div");
@@ -97,8 +110,15 @@ async function createMovieCard() {
   revBtn.value = `${movie.id}`;
 
   revBtn.addEventListener("click", async (event) => {
-    const id = revBtn.value;
     // call create form function // possibly modal
+    const modal = document.getElementById('modal');
+    // assign category to form
+    const con = document.getElementById('hiddenContainer');
+    console.log(con)
+    con.innerHTML = `<input id="category" hidden name="category" value="movie">
+      <input id="id" hidden name="id" value="${revBtn.value}">`
+    
+    modal.showModal()
   });
 
   div.append(h2, p1, p2, p3, p4, revBtn);
@@ -111,11 +131,28 @@ random.addEventListener("click", (event) => {
   createMovieCard();
 });
 
+// enable closing the modal
+const close = document.getElementById('closeModal');
+close.addEventListener('click', ()=> {
+  modal.close()
+})
+
+// update rating value on form to reflect rating currently chosen
+const slider = document.getElementById('slider');
+let value = document.getElementById('ratingValue');
+
+slider.addEventListener("input", function(event){
+  value.innerText= event.target.value;
+})
+
+}
+
 movieBtn.addEventListener("click", (event) => {
   gameContainer.innerHTML = "";
   movieContainer.innerHTML = "";
   createMovieCard();
 });
+
 
 gameBtn.addEventListener("click", (event) => {
   gameContainer.innerHTML = "";
