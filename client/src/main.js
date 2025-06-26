@@ -8,7 +8,7 @@ const gameBtn = document.getElementById("games");
 // test environment
 const test = `http://localhost:8080`;
 const live = `https://indecisive-app-server.onrender.com`;
-const BASE_URL = live;
+const BASE_URL = test;
 
 // fetch random game data
 async function fetchGames() {
@@ -64,7 +64,7 @@ async function createGameCard() {
   details.className = 'details'
 
   const revBtn = document.createElement("button");
-  revBtn.innerText = "Review";
+  revBtn.innerText = "Leave a review";
   revBtn.value = `${game.id}`;
   revBtn.className = "reviewBtn";
   revBtn.id = "gameReviewBtn";
@@ -91,10 +91,80 @@ async function createGameCard() {
   });
 
 
-  div.append(h2, p1, p2, p3, p4, revBtn, showRevBtn);
-  gameContainer.appendChild(div);
+  // show reviews listed
+  const showRevBtn = document.createElement("button");
+  showRevBtn.innerText = "Reviews";
+  showRevBtn.value = `${game.id}`;
+
+  showRevBtn.addEventListener("click", async (event) => {
+    console.log(showRevBtn);
+    showGameReviewsModal(showRevBtn.value);
+  });
+
+  gameContainer.append(h2, details, p3, revBtn, showRevBtn);
+  app.append( gameContainer);
 
 }
+
+// create movie card
+async function createMovieCard() {
+  const data = await fetchMovies();
+  const movie = data[0];
+  movieContainer.innerHTML = "";
+
+  const h2 = document.createElement("h2");
+  h2.className = "title";
+  h2.innerText = `${movie.name}`;
+  const p1 = document.createElement("p");
+  p1.className = "rating";
+  p1.innerText = `${movie.avg_rating}` + ` ★`;
+  const p2 = document.createElement("p");
+  p2.className = "genre";
+  p2.innerText = `${movie.genre}`;
+  const p3 = document.createElement("p");
+  p3.className = "description";
+  p3.innerText = `${movie.description}`;
+  const p4 = document.createElement("p");
+  p4.className = "detail";
+  p4.innerText = `${movie.rating}`;
+
+  const details = document.createElement('div')
+  details.append(p2, p4, p1)
+  details.className = 'details'
+
+  const revBtn = document.createElement("button");
+  revBtn.innerText = "Leave a review";
+
+  revBtn.value = `${movie.id}`;
+  revBtn.className = "reviewBtn";
+
+  revBtn.addEventListener("click", async (event) => {
+    // call create form function // possibly modal
+    const modal = document.getElementById("modal");
+    // assign category to form
+    const con = document.getElementById("hiddenContainer");
+    console.log(con);
+    con.innerHTML = `<input id="category" hidden name="category" value="movie">
+      <input id="id" hidden name="id" value="${revBtn.value}">`;
+
+    modal.showModal();
+  });
+
+
+  // show reviews listed
+  const showRevBtn = document.createElement("button");
+  showRevBtn.innerText = "Reviews";
+  showRevBtn.value = `${movie.id}`;
+
+  showRevBtn.addEventListener("click", async (event) => {
+    console.log(showRevBtn);
+    showMovieReviewsModal(showRevBtn.value);
+  });
+
+  movieContainer.append(h2, details, p3, revBtn, showRevBtn);
+  app.appendChild(movieContainer);
+}
+
 async function fetchGameReviewsById(gameId) {
   const res = await fetch(`${BASE_URL}/gameReviews?id=${gameId}`); //query string to pull from the reviews table specifically the movie ID
   const games = await res.json();
@@ -104,7 +174,7 @@ async function fetchGameReviewsById(gameId) {
 async function showGameReviewsModal(game) {
   const reviews = await fetchGameReviewsById(game);
   console.log(reviews);
-  const modal = document.getElementById("modal reviews");
+  const modal = document.getElementById("modal-reviews");
   let content = `<h2>${reviews[0].name}</h2>`;
   // loop through each review and add it to the string
   for (let i = 0; i < reviews.length; i++) {
@@ -136,7 +206,7 @@ async function fetchMovieReviewsById(movieId) {
 async function showMovieReviewsModal(movie) {
   const reviews = await fetchMovieReviewsById(movie);
   console.log(reviews);
-  const modal = document.getElementById("modal reviews");
+  const modal = document.getElementById("modal-reviews");
   let content = `<h2>${reviews[0].name}</h2>`;
   // loop through each review and add it to the string
   for (let i = 0; i < reviews.length; i++) {
@@ -158,63 +228,9 @@ async function showMovieReviewsModal(movie) {
   modal.showModal();
 }
 
-// create movie card
-async function createMovieCard() {
-  const data = await fetchMovies();
-  const movie = data[0];
-  movieContainer.innerHTML = "";
-
-  const h2 = document.createElement("h2");
-  h2.className = "title";
-  h2.innerText = `${movie.name}`;
-  const p1 = document.createElement("p");
-  p1.className = "rating";
-  p1.innerText = `${movie.avg_rating}` + ` ★`;
-  const p2 = document.createElement("p");
-  p2.className = "genre";
-  p2.innerText = `${movie.genre}`;
-  const p3 = document.createElement("p");
-  p3.className = "description";
-  p3.innerText = `${movie.description}`;
-  const p4 = document.createElement("p");
-  p4.className = "detail";
-  p4.innerText = `${movie.rating}`;
-
-  const details = document.createElement('div')
-  details.append(p2, p4, p1)
-  details.className = 'details'
-
-  const revBtn = document.createElement("button");
-  revBtn.innerText = "Leave a Review";
-  revBtn.value = `${movie.id}`;
-  revBtn.className = "reviewBtn";
-
-  revBtn.addEventListener("click", async (event) => {
-    // call create form function // possibly modal
-    const modal = document.getElementById("modal");
-    // assign category to form
-    const con = document.getElementById("hiddenContainer");
-    console.log(con);
-    con.innerHTML = `<input id="category" hidden name="category" value="movie">
-      <input id="id" hidden name="id" value="${revBtn.value}">`;
-
-    modal.showModal();
-  });
-  // show reviews listed
-  const showRevBtn = document.createElement("button");
-  showRevBtn.innerText = "Reviews";
-  showRevBtn.value = `${movie.id}`;
-
-  showRevBtn.addEventListener("click", async (event) => {
-    console.log(showRevBtn);
-    showMovieReviewsModal(showRevBtn.value);
-  });
 
 
-  div.append(h2, p1, p2, p3, p4, revBtn, showRevBtn);
-  movieContainer.appendChild(div);
 
-}
 
 // add event listener to random button
 random.addEventListener("click", (event) => {
