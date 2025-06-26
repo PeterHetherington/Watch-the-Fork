@@ -35,7 +35,7 @@ movieContainer.className = 'movieContainer'
 // const modal = document.getElementById('modal');
 // modal.showModal()
 
-const modCon = document.getElementById('modalContainer');
+const modCon = document.getElementById("modalContainer");
 
 // create game card
 async function createGameCard() {
@@ -67,19 +67,29 @@ async function createGameCard() {
   revBtn.innerText = "Leave a review";
   revBtn.value = `${game.id}`;
   revBtn.className = "reviewBtn";
-  revBtn.id = "gameReviewBtn"
+  revBtn.id = "gameReviewBtn";
 
   revBtn.addEventListener("click", async (event) => {
     // call create form function // possibly modal
-    const modal = document.getElementById('modal');
+    const modal = document.getElementById("modal");
     // assign category to form
-    const con = document.getElementById('hiddenContainer');
-    console.log(con)
+    const con = document.getElementById("hiddenContainer");
+    console.log(con);
     con.innerHTML = `<input id="category" hidden name="category" value="game">
-      <input id="id" hidden name="id" value="${revBtn.value}">`
-    
-    modal.showModal()
+      <input id="id" hidden name="id" value="${revBtn.value}">`;
+
+    modal.showModal();
   });
+  // show reviews listed
+  const showRevBtn = document.createElement("button");
+  showRevBtn.innerText = "Leave a Review";
+  showRevBtn.value = `${game.id}`;
+
+  showRevBtn.addEventListener("click", async (event) => {
+    console.log(showRevBtn);
+    showGameReviewsModal(showRevBtn.value);
+  });
+
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
@@ -93,6 +103,7 @@ async function createGameCard() {
 
   gameContainer.append(h2, details, p3, revBtn, showRevBtn);
   app.append( gameContainer);
+
 }
 
 // create movie card
@@ -123,20 +134,22 @@ async function createMovieCard() {
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Leave a review";
+
   revBtn.value = `${movie.id}`;
   revBtn.className = "reviewBtn";
 
   revBtn.addEventListener("click", async (event) => {
     // call create form function // possibly modal
-    const modal = document.getElementById('modal');
+    const modal = document.getElementById("modal");
     // assign category to form
-    const con = document.getElementById('hiddenContainer');
-    console.log(con)
+    const con = document.getElementById("hiddenContainer");
+    console.log(con);
     con.innerHTML = `<input id="category" hidden name="category" value="movie">
-      <input id="id" hidden name="id" value="${revBtn.value}">`
-    
-    modal.showModal()
+      <input id="id" hidden name="id" value="${revBtn.value}">`;
+
+    modal.showModal();
   });
+
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
@@ -226,24 +239,24 @@ random.addEventListener("click", (event) => {
 });
 
 // enable closing the modal
-const close = document.getElementById('closeModal');
-close.addEventListener('click', ()=> {
-  modal.close()
-})
+const close = document.getElementById("closeModal");
+close.addEventListener("click", () => {
+  modal.close();
+});
 
 // update rating value on form to reflect rating currently chosen
-const slider = document.getElementById('slider');
-let value = document.getElementById('ratingValue');
+const slider = document.getElementById("slider");
+let value = document.getElementById("ratingValue");
 
-slider.addEventListener("input", function(event){
-  value.innerText= event.target.value;
-})
+
+slider.addEventListener("input", function (event) {
+  value.innerText = event.target.value;
+});
 
 movieBtn.addEventListener("click", (event) => {
   app.innerHTML = "";
   createMovieCard();
 });
-
 
 gameBtn.addEventListener("click", (event) => {
   app.innerHTML = "";

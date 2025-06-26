@@ -79,7 +79,7 @@ app.get("/games", async (req, res) => {
 app.get("/gameReviews", async (req, res) => {
   const id = req.query.id; // get value from query string
   const result = await db.query(
-    `SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`,
+    `SELECT g.name, g.id, gr.review, gr.name AS user_name, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`,
     [id]
   );
   res.json(result.rows);
