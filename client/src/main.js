@@ -26,8 +26,10 @@ async function fetchMovies() {
 
 // TODO
 // get card display
-const gameContainer = document.getElementById("gameContainer");
-const movieContainer = document.getElementById("movieContainer");
+const gameContainer = document.createElement('div');
+gameContainer.className = 'gameContainer'
+const movieContainer = document.createElement('div');
+movieContainer.className = 'movieContainer'
 
 // get modal
 // const modal = document.getElementById('modal');
@@ -41,14 +43,12 @@ async function createGameCard() {
   const game = data[0];
   gameContainer.innerHTML = "";
 
-  const div = document.createElement("div");
-  div.className = "card";
   const h2 = document.createElement("h2");
   h2.className = "title";
   h2.innerText = `${game.name}`;
   const p1 = document.createElement("p");
   p1.className = "rating";
-  p1.innerText = `${game.avg_rating}`;
+  p1.innerText = `${game.avg_rating}` + ` ★`;
   const p2 = document.createElement("p");
   p2.className = "genre";
   p2.innerText = `${game.genre}`;
@@ -58,6 +58,10 @@ async function createGameCard() {
   const p4 = document.createElement("p");
   p4.className = "detail";
   p4.innerText = `${game.maxplayers}`;
+
+  const details = document.createElement('div')
+  details.append(p2, p4, p1)
+  details.className = 'details'
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Review";
@@ -77,8 +81,8 @@ async function createGameCard() {
     modal.showModal()
   });
 
-  div.append(h2, p1, p2, p3, p4, revBtn);
-  gameContainer.appendChild(div);
+  gameContainer.append(h2, details, p3, revBtn);
+  app.append( gameContainer);
 }
 
 // create movie card
@@ -87,14 +91,12 @@ async function createMovieCard() {
   const movie = data[0];
   movieContainer.innerHTML = "";
 
-  const div = document.createElement("div");
-  div.className = "card";
   const h2 = document.createElement("h2");
   h2.className = "title";
   h2.innerText = `${movie.name}`;
   const p1 = document.createElement("p");
   p1.className = "rating";
-  p1.innerText = `${movie.avg_rating}`;
+  p1.innerText = `${movie.avg_rating}` + ` ★`;
   const p2 = document.createElement("p");
   p2.className = "genre";
   p2.innerText = `${movie.genre}`;
@@ -105,9 +107,14 @@ async function createMovieCard() {
   p4.className = "detail";
   p4.innerText = `${movie.rating}`;
 
+  const details = document.createElement('div')
+  details.append(p2, p4, p1)
+  details.className = 'details'
+
   const revBtn = document.createElement("button");
   revBtn.innerText = "Review";
   revBtn.value = `${movie.id}`;
+  revBtn.className = "reviewBtn";
 
   revBtn.addEventListener("click", async (event) => {
     // call create form function // possibly modal
@@ -121,8 +128,8 @@ async function createMovieCard() {
     modal.showModal()
   });
 
-  div.append(h2, p1, p2, p3, p4, revBtn);
-  movieContainer.appendChild(div);
+  movieContainer.append(h2, details, p3, revBtn);
+  app.appendChild(movieContainer);
 }
 
 // add event listener to random button
@@ -145,17 +152,14 @@ slider.addEventListener("input", function(event){
   value.innerText= event.target.value;
 })
 
-}
 
 movieBtn.addEventListener("click", (event) => {
-  gameContainer.innerHTML = "";
-  movieContainer.innerHTML = "";
+  app.innerHTML = "";
   createMovieCard();
 });
 
 
 gameBtn.addEventListener("click", (event) => {
-  gameContainer.innerHTML = "";
-  movieContainer.innerHTML = "";
+  app.innerHTML = "";
   createGameCard();
 });
