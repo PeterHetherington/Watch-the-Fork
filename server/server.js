@@ -28,10 +28,21 @@ app.get("/movies", async (req, res) => {
 
 // get reviews & ratings from each movies
 app.get(`/movieReviews`, async (req, res) => {
-  const result = db.query(
-    `SELECT m.name, m.genre, m.description, m.rating, ROUND(AVG(mr.user_ratings), 1) AS avg_rating FROM movies m JOIN movie_reviews mr ON m.id = mr.movies_id GROUP BY m.name, m.genre, m.description, m.rating ORDER BY m.name ASC`
+  const id = req.query.id;
+  // console.log(id)
+  const result = await db.query(
+    `SELECT 
+  m.name, 
+  mr.name AS user_name,
+  mr.user_ratings AS review_rating,
+  mr.reviews
+FROM movies m
+JOIN movie_reviews mr ON m.id = mr.movies_id
+WHERE m.id = $1;`,
+    [id]
   );
-  res.json((await result).rows);
+  console.log(result)
+  res.json(result.rows);
 });
 
 // get a random movie

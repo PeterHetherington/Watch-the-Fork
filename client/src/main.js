@@ -8,7 +8,7 @@ const gameBtn = document.getElementById("games");
 // test environment
 const test = `http://localhost:8080`;
 const live = `https://indecisive-app-server.onrender.com`;
-const BASE_URL = live;
+const BASE_URL = test;
 
 // fetch random game data
 async function fetchGames() {
@@ -64,7 +64,7 @@ async function createGameCard() {
   details.className = 'details'
 
   const revBtn = document.createElement("button");
-  revBtn.innerText = "Review";
+  revBtn.innerText = "Leave a review";
   revBtn.value = `${game.id}`;
   revBtn.className = "reviewBtn";
   revBtn.id = "gameReviewBtn"
@@ -81,7 +81,17 @@ async function createGameCard() {
     modal.showModal()
   });
 
-  gameContainer.append(h2, details, p3, revBtn);
+  // show reviews listed
+  const showRevBtn = document.createElement("button");
+  showRevBtn.innerText = "Reviews";
+  showRevBtn.value = `${game.id}`;
+
+  showRevBtn.addEventListener("click", async (event) => {
+    console.log(showRevBtn);
+    showGameReviewsModal(showRevBtn.value);
+  });
+
+  gameContainer.append(h2, details, p3, revBtn, showRevBtn);
   app.append( gameContainer);
 }
 
@@ -112,7 +122,7 @@ async function createMovieCard() {
   details.className = 'details'
 
   const revBtn = document.createElement("button");
-  revBtn.innerText = "Review";
+  revBtn.innerText = "Leave a review";
   revBtn.value = `${movie.id}`;
   revBtn.className = "reviewBtn";
 
@@ -128,9 +138,86 @@ async function createMovieCard() {
     modal.showModal()
   });
 
-  movieContainer.append(h2, details, p3, revBtn);
+  // show reviews listed
+  const showRevBtn = document.createElement("button");
+  showRevBtn.innerText = "Reviews";
+  showRevBtn.value = `${movie.id}`;
+
+  showRevBtn.addEventListener("click", async (event) => {
+    console.log(showRevBtn);
+    showMovieReviewsModal(showRevBtn.value);
+  });
+
+  movieContainer.append(h2, details, p3, revBtn, showRevBtn);
   app.appendChild(movieContainer);
 }
+
+async function fetchGameReviewsById(gameId) {
+  const res = await fetch(`${BASE_URL}/gameReviews?id=${gameId}`); //query string to pull from the reviews table specifically the movie ID
+  const games = await res.json();
+  return games;
+}
+
+async function showGameReviewsModal(game) {
+  const reviews = await fetchGameReviewsById(game);
+  console.log(reviews);
+  const modal = document.getElementById("modal-reviews");
+  let content = `<h2>${reviews[0].name}</h2>`;
+  // loop through each review and add it to the string
+  for (let i = 0; i < reviews.length; i++) {
+    const r = reviews[i];
+    content += `<div class="review">
+        Name: ${r.user_name}
+        Rating: ${r.rating}
+        Review: ${r.review}
+        </div>`;
+  }
+  // I did have this in the loop but I got multiple close buttons.
+  content += `<button id="closeReviewsModal">Close</button>`;
+
+  modal.innerHTML = content;
+  const closeBtn = document.getElementById("closeReviewsModal");
+  closeBtn.addEventListener("click", function () {
+    modal.close();
+  });
+  modal.showModal();
+}
+
+// Get reviews for movies
+async function fetchMovieReviewsById(movieId) {
+  const res = await fetch(`${BASE_URL}/movieReviews?id=${movieId}`); //query string to pull from the reviews table specifically the movie ID
+  const movies = await res.json();
+  return movies;
+}
+
+async function showMovieReviewsModal(movie) {
+  const reviews = await fetchMovieReviewsById(movie);
+  console.log(reviews);
+  const modal = document.getElementById("modal-reviews");
+  let content = `<h2>${reviews[0].name}</h2>`;
+  // loop through each review and add it to the string
+  for (let i = 0; i < reviews.length; i++) {
+    const r = reviews[i];
+    content += `<div class="review">
+        Name: ${r.user_name}
+        Rating: ${r.review_rating}
+        Review: ${r.reviews}
+        </div>`;
+  }
+  // I did have this in the loop but I got multiple close buttons.
+  content += `<button id="closeReviewsModal">Close</button>`;
+
+  modal.innerHTML = content;
+  const closeBtn = document.getElementById("closeReviewsModal");
+  closeBtn.addEventListener("click", function () {
+    modal.close();
+  });
+  modal.showModal();
+}
+
+
+
+
 
 // add event listener to random button
 random.addEventListener("click", (event) => {
