@@ -15,7 +15,7 @@ body {
   overflow-y: hidden;
 
   /* fix mobile dis */
-	@media (width < 400px){
+	@media (width < 500px){
     display: grid;
 	grid-template-rows: 1fr 1fr 1fr;
 	height: 100vh;
@@ -47,7 +47,7 @@ body {
 	width: 100vw;
 	height: 25vh;
 
-	@media (width > 400px){
+	@media (width > 500px){
 		padding: 15rem 0rem 0rem 0rem;
 		width: 100%;
 		grid-column: span 2;
@@ -83,7 +83,7 @@ body {
 	grid-column: span 2;
 	justify-self: center;
 
-	@media (width < 400px){
+	@media (width < 500px){
     width: 93%;
 	height: 10vh;
   }
@@ -140,7 +140,7 @@ body {
 	width: 30vw;
 	justify-self: center;
 
-	@media (width < 400px){
+	@media (width < 500px){
     width: 306px;
 	height: 27vh;
 	padding: 1rem;
@@ -161,7 +161,7 @@ body {
 	width: 30vw;
 	justify-self: center;
 
-	@media (width < 400px){
+	@media (width < 500px){
     width: 306px;
 	height: 27vh;
 	padding: 1rem;
@@ -175,7 +175,7 @@ body {
 .app { 
 	/* display: flex;
 	gap: 4vw; */
-	@media (width > 400px) {
+	@media (width > 500px) {
 		grid-row-start: 2;
 		grid-column-start: 2; 
 	}
@@ -224,7 +224,7 @@ body {
 	padding: 1.5rem;
 	z-index: 1000;
 
-	@media (width <400px){
+	@media (width <500px){
     width: 60vw;
 	left: 2vw;
   }
@@ -245,7 +245,7 @@ body {
 .form-group {
   display: grid;
   padding: 4px 0px 8px 0px;
-  @media (width < 400px){
+  @media (width < 500px){
     padding: 0px;
   }
 }
@@ -293,7 +293,7 @@ label {
 	border-radius: 10px;
 	text-transform: uppercase;
 
-	@media (width <400px){
+	@media (width <500px){
     width: 60vw;
 	left: 0vw;
   }
