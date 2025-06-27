@@ -163,7 +163,7 @@ async function fetchGameReviewsById(gameId) {
 }
 
 // ! Name, Rating & Review need to be seperate elements
-// TODO - fix how elements are created for easier CSS styling 
+// TODO - fix how elements are created for easier CSS styling & add like button with value = reviewid
 async function showGameReviewsModal(game) {
   const reviews = await fetchGameReviewsById(game);
   // console.log(reviews);
@@ -196,6 +196,8 @@ async function fetchMovieReviewsById(movieId) {
   return movies;
 }
 
+// ! Name, Rating & Review need to be seperate elements
+// TODO - fix how elements are created for easier CSS styling & add like button with value = reviewid
 async function showMovieReviewsModal(movie) {
   const reviews = await fetchMovieReviewsById(movie);
   // console.log(reviews);
@@ -211,7 +213,7 @@ async function showMovieReviewsModal(movie) {
         </div>`;
   }
   // I did have this in the loop but I got multiple close buttons.
-  content += `<button id="closeReviewsModal">Close</button>`;
+  content += `<button class="closeReviews" id="closeReviewsModal">Close</button>`;
 
   modal.innerHTML = content;
   const closeBtn = document.getElementById("closeReviewsModal");

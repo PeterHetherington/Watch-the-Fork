@@ -95,6 +95,46 @@ app.get("/randGame", async (req, res) => {
   res.json(result.rows);
 });
 
+// ! LIKES
+// get game review likes
+app.get('/likes', async (req, res)=> {
+    const id = req.query.id
+    const result = await db.query(`SELECT id, likes FROM gameReviews WHERE id=$1`, [id])
+    res.json(result.rows)
+})
+
+// get movie review likes
+app.get('/likes', async (req, res)=> {
+    const id = req.query.id
+    const result = await db.query(`SELECT id, likes FROM movie_reviews WHERE id=$1`, [id])
+    res.json(result.rows)
+})
+
+// UPDATE game review likes POST route
+app.post('/likes', async (req, res) =>{
+    const body = req.body
+    const idFromClient = req.body.id
+    const likesFromClient = req.body.likes
+    // console.log(body)
+    // console.log(idFromClient)
+    // console.log(likesFromClient)
+    const data = await db.query(`UPDATE gameReviews SET likes=$1 WHERE id=$2`, [likesFromClient, idFromClient])
+    res.send('Done')
+})
+
+// UPDATE movie review likes
+app.post('/likes', async (req, res) =>{
+    const body = req.body
+    const idFromClient = req.body.id
+    const likesFromClient = req.body.likes
+    // console.log(body)
+    // console.log(idFromClient)
+    // console.log(likesFromClient)
+    const data = await db.query(`UPDATE movie_reviews SET likes=$1 WHERE id=$2`, [likesFromClient, idFromClient])
+    res.send('Done')
+})
+
+
 // POST
 // post form to games
 app.post("/gameReviews", async (req, res) => {
