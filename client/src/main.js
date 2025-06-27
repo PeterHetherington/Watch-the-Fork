@@ -1,6 +1,7 @@
 const random = document.getElementById("random");
 
 const app = document.getElementById("app");
+const apptwo = document.getElementById("apptwo");
 
 const movieBtn = document.getElementById("movies");
 const gameBtn = document.getElementById("games");
@@ -8,7 +9,7 @@ const gameBtn = document.getElementById("games");
 // test environment
 const test = `http://localhost:8080`;
 const live = `https://indecisive-app-server.onrender.com`;
-const BASE_URL = test;
+const BASE_URL = live;
 
 // fetch random game data
 async function fetchGames() {
@@ -26,10 +27,11 @@ async function fetchMovies() {
 
 // TODO
 // get card display
-const gameContainer = document.createElement("div");
-gameContainer.className = "gameContainer";
-const movieContainer = document.createElement("div");
-movieContainer.className = "movieContainer";
+const gameContainer = document.createElement('div');
+gameContainer.className = 'gameContainer'
+const movieContainer = document.createElement('div');
+movieContainer.className = 'movieContainer'
+movieContainer.id = 'movieContainer'
 
 // get modal
 // const modal = document.getElementById('modal');
@@ -57,7 +59,7 @@ async function createGameCard() {
   p3.innerText = `${game.description}`;
   const p4 = document.createElement("p");
   p4.className = "detail";
-  p4.innerText = `${game.maxplayers}`;
+  p4.innerText = `MaxPlayers: ${game.maxplayers}`;
 
   const details = document.createElement("div");
   details.append(p2, p4, p1);
@@ -73,8 +75,8 @@ async function createGameCard() {
     // call create form function // possibly modal
     const modal = document.getElementById("modal");
     // assign category to form
-    const con = document.getElementById("hiddenContainer");
-    console.log(con);
+    const con = document.getElementById('hiddenContainer');
+    // console.log(con)
     con.innerHTML = `<input id="category" hidden name="category" value="game">
       <input id="id" hidden name="id" value="${revBtn.value}">`;
 
@@ -83,11 +85,12 @@ async function createGameCard() {
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
-  showRevBtn.innerText = "Reviews";
+  showRevBtn.innerText = "See reviews";
   showRevBtn.value = `${game.id}`;
+  showRevBtn.className = "reviewBtn";
 
   showRevBtn.addEventListener("click", async (event) => {
-    console.log(showRevBtn);
+    // console.log(showRevBtn);
     showGameReviewsModal(showRevBtn.value);
   });
 
@@ -123,7 +126,6 @@ async function createMovieCard() {
 
   const revBtn = document.createElement("button");
   revBtn.innerText = "Leave a review";
-
   revBtn.value = `${movie.id}`;
   revBtn.className = "reviewBtn";
 
@@ -131,8 +133,8 @@ async function createMovieCard() {
     // call create form function // possibly modal
     const modal = document.getElementById("modal");
     // assign category to form
-    const con = document.getElementById("hiddenContainer");
-    console.log(con);
+    const con = document.getElementById('hiddenContainer');
+    // console.log(con)
     con.innerHTML = `<input id="category" hidden name="category" value="movie">
       <input id="id" hidden name="id" value="${revBtn.value}">`;
 
@@ -141,16 +143,17 @@ async function createMovieCard() {
 
   // show reviews listed
   const showRevBtn = document.createElement("button");
-  showRevBtn.innerText = "Reviews";
+  showRevBtn.innerText = "See reviews";
   showRevBtn.value = `${movie.id}`;
+  showRevBtn.className = "reviewBtn";
 
   showRevBtn.addEventListener("click", async (event) => {
-    console.log(showRevBtn);
+    // console.log(showRevBtn);
     showMovieReviewsModal(showRevBtn.value);
   });
 
   movieContainer.append(h2, details, p3, revBtn, showRevBtn);
-  app.appendChild(movieContainer);
+  apptwo.appendChild(movieContainer);
 }
 
 async function fetchGameReviewsById(gameId) {
@@ -159,9 +162,11 @@ async function fetchGameReviewsById(gameId) {
   return games;
 }
 
+// ! Name, Rating & Review need to be seperate elements
+// TODO - fix how elements are created for easier CSS styling 
 async function showGameReviewsModal(game) {
   const reviews = await fetchGameReviewsById(game);
-  console.log(reviews);
+  // console.log(reviews);
   const modal = document.getElementById("modal-reviews");
   let content = `<h2>${reviews[0].name}</h2>`;
   // loop through each review and add it to the string
@@ -174,7 +179,7 @@ async function showGameReviewsModal(game) {
         </div>`;
   }
   // I did have this in the loop but I got multiple close buttons.
-  content += `<button id="closeReviewsModal">Close</button>`;
+  content += `<button class="closeReviews" id="closeReviewsModal">Close</button>`;
 
   modal.innerHTML = content;
   const closeBtn = document.getElementById("closeReviewsModal");
@@ -193,7 +198,7 @@ async function fetchMovieReviewsById(movieId) {
 
 async function showMovieReviewsModal(movie) {
   const reviews = await fetchMovieReviewsById(movie);
-  console.log(reviews);
+  // console.log(reviews);
   const modal = document.getElementById("modal-reviews");
   let content = `<h2>${reviews[0].name}</h2>`;
   // loop through each review and add it to the string
@@ -216,6 +221,7 @@ async function showMovieReviewsModal(movie) {
   modal.showModal();
 }
 
+
 // add event listener to random button
 random.addEventListener("click", (event) => {
   createGameCard();
@@ -237,7 +243,7 @@ slider.addEventListener("input", function (event) {
 });
 
 movieBtn.addEventListener("click", (event) => {
-  app.innerHTML = "";
+  apptwo.innerHTML = "";
   createMovieCard();
 });
 
@@ -261,10 +267,10 @@ form.addEventListener("submit", async (event) => {
     alert("Unable to post review, Username & rating required");
     return;
   }
-  // check of game or movie
-  if (data.category == "game") {
-    console.log("try to submit game");
-    console.log(data);
+  // check if game or movie
+  if (data.category == 'game'){
+    // console.log('try to submit game')
+    // console.log(data)
     try {
       const res = await fetch(`${BASE_URL}/gameReviews`, {
         method: "POST",
@@ -283,9 +289,9 @@ form.addEventListener("submit", async (event) => {
       console.log(error);
       alert("Unable to submit review");
     }
-  } else if (data.category == "movie") {
-    console.log("try to submit movie");
-    console.log(data);
+  } else if (data.category == 'movie'){
+    // console.log('try to submit movie')
+    // console.log(data)
     try {
       const res = await fetch(`${BASE_URL}/moviesreviews`, {
         method: "POST",
@@ -308,4 +314,25 @@ form.addEventListener("submit", async (event) => {
     alert("Error: could not process review submission");
     return;
   }
+});
+
+// add event listener to buttons container to change class on click
+// query selector all would have been cleaner
+const randombtn = document.getElementById('random') 
+const moviesbtn = document.getElementById('movies')
+const gamesbtn = document.getElementById('games')
+const btnContainer = document.getElementById('buttons')
+
+randombtn.addEventListener('click', (event) => {
+  btnContainer.className = 'clickedButtons'
+});
+
+moviesbtn.addEventListener('click', (event) => {
+  btnContainer.className = 'clickedButtons'
+  movieContainer.className = 'movieContainer clickedMovieContainer'
+});
+
+gamesbtn.addEventListener('click', (event) => {
+  btnContainer.className = 'clickedButtons'
+  movieContainer.className = 'movieContainer'
 });
