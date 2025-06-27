@@ -41,7 +41,7 @@ JOIN movie_reviews mr ON m.id = mr.movies_id
 WHERE m.id = $1;`,
     [id]
   );
-  console.log(result)
+  // console.log(result)
   res.json(result.rows);
 });
 
@@ -79,9 +79,10 @@ app.get("/games", async (req, res) => {
 app.get("/gameReviews", async (req, res) => {
   const id = req.query.id; // get value from query string
   const result = await db.query(
-    `SELECT g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`,
+    `SELECT gr.name AS user_name, g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`,
     [id]
   );
+  // console.log(result)
   res.json(result.rows);
 });
 
@@ -98,7 +99,7 @@ app.get("/randGame", async (req, res) => {
 // post form to games
 app.post("/gameReviews", async (req, res) => {
   const body = req.body;
-  console.log(body)
+  // console.log(body)
 
   const nameFromClient = req.body.name;
   const gameIdFromClient = req.body.id;
