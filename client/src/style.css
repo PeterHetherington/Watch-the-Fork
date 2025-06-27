@@ -232,7 +232,7 @@ body {
 }
 
 .modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.349);
 }
 
 .modal>h2 {
@@ -242,7 +242,7 @@ body {
     font-size: 2rem;
 } 
 
-.form-group{
+.form-group {
   display: grid;
   padding: 4px 0px 8px 0px;
   @media (width < 400px){
@@ -250,7 +250,7 @@ body {
   }
 }
 
-textarea{
+textarea {
   height: 5rem;
   /* width: 92%; */
   padding: 10px;
@@ -261,7 +261,7 @@ textarea{
   }
 }
 
-label{
+label {
   text-transform: uppercase;
   padding: 1ex 0ex 1ex 0ex;
   color: white;
@@ -319,12 +319,12 @@ label{
   margin-bottom: 10px;
   font-family: initial;
 
-   @media (width > 800px){
+  @media (width > 800px) {
     width: 11rem;
     font-size: 10rem;
     border-radius: 12rem;
     padding: 55px;
-    height:11rem;
+    height: 11rem;
     /* margin-top: 10px; */
   }
 }
@@ -340,6 +340,7 @@ label{
 	position: absolute;
 	top: 20px;
 	right: 25px;
+
 }
 
 .reviews {

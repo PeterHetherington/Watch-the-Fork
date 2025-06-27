@@ -80,6 +80,7 @@ app.get("/gameReviews", async (req, res) => {
   const id = req.query.id; // get value from query string
   const result = await db.query(
     `SELECT gr.name AS user_name, g.name, g.id, gr.review, gr.rating FROM games g JOIN gamereviews gr on g.id = gr.game_id WHERE g.id = $1`,
+
     [id]
   );
   // console.log(result)
@@ -93,7 +94,6 @@ app.get("/randGame", async (req, res) => {
   );
   res.json(result.rows);
 });
-
 
 // POST
 // post form to games
